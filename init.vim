@@ -48,7 +48,7 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_working_path_mode = 'ra'
 
 " git-blame
-nnoremap <Leader>L :<C-u>call gitblame#echo()<CR>
+nnoremap <Leader> :<C-u>call gitblame#echo()<CR>
 
 " vim-go
 let g:go_gocode_propose_source=0
