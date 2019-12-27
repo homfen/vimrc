@@ -1,4 +1,4 @@
 ## My Vim Configuration
 
--vimrc for Vim8
--init.vim for NeoVim
+- vimrc for Vim8
+- init.vim for NeoVim
