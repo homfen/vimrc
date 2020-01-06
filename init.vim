@@ -31,10 +31,10 @@ call plug#end()
 let mapleader=';'
 
 " Tab
-nnoremap <Leader>c :tabc<CR>
-nnoremap <Leader>k :tabn<CR>
-nnoremap <Leader>j :tabp<CR>
-nnoremap <Leader>t :tabnew<CR>
+nnoremap <C-c> :tabc<CR>
+nnoremap <C-[> :tabp<CR>
+nnoremap <C-]> :tabn<CR>
+nnoremap <C-t> :tabnew<CR>
 
 " Ag
 nnoremap ag :Ag
