@@ -11,9 +11,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'scrooloose/nerdcommenter'
-"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-Plug 'christoomey/vim-tmux-navigator'
+"Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'morhetz/gruvbox'
 
@@ -32,8 +32,8 @@ let mapleader=';'
 
 " Tab
 nnoremap <C-c> :tabc<CR>
-nnoremap <C-[> :tabp<CR>
-nnoremap <C-]> :tabn<CR>
+nnoremap <C-h> :tabp<CR>
+nnoremap <C-l> :tabn<CR>
 nnoremap <C-t> :tabnew<CR>
 
 " Ag
