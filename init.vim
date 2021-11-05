@@ -3,26 +3,37 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'scrooloose/nerdtree'
-"Plug 'tsony-tsonev/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'tsony-tsonev/nerdtree-git-plugin'
+Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-"Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'morhetz/gruvbox'
 
-Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+" Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mileszs/ack.vim'
 Plug 'zivyangll/git-blame.vim'
 Plug 'fatih/vim-go'
+
+Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app & yarn install'}
+
+Plug 'homfen/fecompressor.vim'
+
+Plug 'rust-lang/rust.vim'
+Plug 'alpertuna/vim-header'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 
 " Initialize plugin system
@@ -30,17 +41,45 @@ call plug#end()
 
 let mapleader=';'
 
+" Move current tab into the specified direction.
+"
+" @param direction -1 for left, 1 for right.
+function! TabMove(direction)
+    " get number of tab pages.
+    let ntp=tabpagenr("$")
+    " move tab, if necessary.
+    if ntp > 1
+        " get number of current tab page.
+        let ctpn=tabpagenr()
+        " move left.
+        if a:direction > 0 && ctpn < ntp
+            let index=(ctpn+1%ntp)
+
+            " move tab page.
+            execute "tabmove ".index
+        endif
+    endif
+endfunction
+
 " Tab
 nnoremap <C-c> :tabc<CR>
 nnoremap <C-h> :tabp<CR>
 nnoremap <C-l> :tabn<CR>
 nnoremap <C-t> :tabnew<CR>
+nnoremap <Leader>m :call TabMove(1)<CR>
 
 " Ag
 nnoremap ag :Ag
 cnoreabbrev ack Ack!
-cnoreabbrev Ack Ack!
 " nnoremap <Leader>a :Ack!<Space>
+" Rg
+nnoremap rg :Rg
+cnoreabbrev rg Rg!
+" nnoremap <Leader>a :Ack!<Space>
+" fzf
+nnoremap bl :BLines
+cnoreabbrev bl BLines!
+
 
 " ag, ctrlp
 let g:ag_working_path_mode="r"
@@ -54,12 +93,23 @@ nnoremap <Leader>l :<C-u>call gitblame#echo()<CR>
 let g:go_gocode_propose_source=0
 
 " commenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 0
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+map cm <leader>cm
 map cc <leader>cc
 map cu <leader>cu
 map cs <leader>cs
 map ca <leader>ca
 map cA <leader>cA
 
+" noh
+nnoremap <CR> :noh<CR><CR>
 
 
 
@@ -87,16 +137,18 @@ let g:NERDTreeGitStatusWithFlags = 1
     "\ }                         
 
 
-let g:NERDTreeIgnore = ['^node_modules$']
+" let g:NERDTreeIgnore = ['^node_modules$']
 
 " vim-prettier
 "let g:prettier#quickfix_enabled = 0
 "let g:prettier#quickfix_auto_focus = 0
+let g:prettier#config#trailing_comma = 'none'
 " prettier command for coc
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " run prettier on save
-"let g:prettier#autoformat = 0
-"autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+let g:prettier#autoformat = 0
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 
 " ctrlp
@@ -116,6 +168,9 @@ set shiftwidth=2
 " always uses spaces instead of tab characters
 set expandtab
 set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
 
 colorscheme gruvbox
 
@@ -214,7 +269,8 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -267,3 +323,82 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+
+" Markdown
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {}
+    \ }
+" use a custom markdown style must be absolute path
+let g:mkdp_markdown_css = ''
+" use a custom highlight style must absolute path
+let g:mkdp_highlight_css = ''
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+nmap <C-m> <Plug>MarkdownPreviewToggle
+
+
+let g:header_field_author = 'xingquan'
+let g:header_auto_add_header = 0
+let g:header_field_modified_timestamp = 0
+let g:header_field_modified_by = 0
+let g:header_field_timestamp_format = '%Y.%m.%d'
+nnoremap <Leader>c :AddHeader<CR>
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx :AddMinHeader<CR>
