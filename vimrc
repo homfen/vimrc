@@ -98,8 +98,6 @@ nnoremap ag :Ag
 cnoreabbrev ack Ack!
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
-nnoremap de :%!python2.7 ~/.vim/bundle/vim-json-coders/json-decoder.py<CR>
-nnoremap en :%!python2.7 ~/.vim/bundle/vim-json-coders/json-encoder.py<CR>
 map cc <leader>cc
 map cu <leader>cu
 map cs <leader>cs

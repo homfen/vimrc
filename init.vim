@@ -5,7 +5,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'johnstef99/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
@@ -14,8 +15,11 @@ Plug 'preservim/nerdcommenter'
 " Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'morhetz/gruvbox'
+" Plug 'ellisonleao/gruvbox.nvim'
+" Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 
 Plug 'terryma/vim-multiple-cursors'
@@ -41,6 +45,7 @@ Plug 'google/vim-glaive'
 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
+Plug 'easymotion/vim-easymotion'
 
 " Initialize plugin system
 call plug#end()
@@ -57,7 +62,7 @@ augroup autoformat_settings
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType vue,javascript,html,css,sass,scss,less,json AutoFormatBuffer prettier
+  autocmd FileType vue,typescript,typescriptreact,javascript,javascriptreact,html,css,sass,scss,less,json AutoFormatBuffer prettier
   " " autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
   " " Alternative: autocmd FileType python AutoFormatBuffer autopep8
@@ -65,6 +70,8 @@ augroup autoformat_settings
 augroup END
 
 colorscheme gruvbox
+" colorscheme tokyonight-storm
+" colorscheme tokyonight-moon
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -98,7 +105,11 @@ nnoremap <C-c> :tabc<CR>
 nnoremap <C-h> :tabp<CR>
 nnoremap <C-l> :tabn<CR>
 nnoremap <C-t> :tabnew<CR>
+" nnoremap <C-k> :tab ter<CR>
 nnoremap <Leader>m :call TabMove(1)<CR>
+
+" turn off highlight until the next Search
+nnoremap <ESC> :noh<CR>
 
 " Ag
 nnoremap ag :Ag
@@ -111,6 +122,10 @@ cnoreabbrev rg Rg!
 " fzf
 nnoremap bl :BLines
 cnoreabbrev bl BLines!
+
+" Gif config
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
 
 " let g:fzf_preview_window = []
 " let g:fzf_layout = { 'window': 'copen' }
@@ -194,8 +209,6 @@ set foldnestmax=10
 set nofoldenable
 set foldlevel=2
 
-colorscheme gruvbox
-
 " sync open file with NERDTree
 " " Check if NERDTree is open or active
 function! IsNERDTreeOpen()        
@@ -237,11 +250,6 @@ set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
