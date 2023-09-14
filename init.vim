@@ -47,6 +47,8 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 Plug 'easymotion/vim-easymotion'
 
+" Plug 'zchee/deoplete-jedi'
+
 " Initialize plugin system
 call plug#end()
 
@@ -141,6 +143,7 @@ nnoremap <Leader>l :<C-u>call gitblame#echo()<CR>
 " vim-go
 let g:go_gocode_propose_source=0
 
+let NERDTreeShowHidden=1
 " commenter
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -271,9 +274,13 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
+" nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent> gt :call CocAction('jumpDefinition', 'tabe')<CR>
+nmap <silent> gb <C-o><CR>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -425,7 +432,7 @@ let g:mkdp_page_title = '「${name}」'
 nmap <C-m> <Plug>MarkdownPreviewToggle
 
 
-let g:header_field_author = 'xingquan'
+let g:header_field_author = 'hongfeng'
 let g:header_auto_add_header = 0
 let g:header_field_modified_timestamp = 0
 let g:header_field_modified_by = 0
