@@ -14,11 +14,17 @@ Plug 'preservim/nerdcommenter'
 
 " Plug 'christoomey/vim-tmux-navigator'
 
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 " Plug 'ellisonleao/gruvbox.nvim'
 " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'jacoborus/tender.vim'
+Plug 'jaredgorski/spacecamp'
+Plug 'sainnhe/sonokai'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'projekt0n/github-nvim-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" Plug 'itchyny/lightline.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 
 
@@ -47,6 +53,8 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 
 Plug 'easymotion/vim-easymotion'
 
+Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
+
 " Plug 'zchee/deoplete-jedi'
 
 " Initialize plugin system
@@ -71,10 +79,28 @@ augroup autoformat_settings
   autocmd FileType rust AutoFormatBuffer rustfmt
 augroup END
 
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme tokyonight-storm
 " colorscheme tokyonight-moon
-let g:airline_theme='gruvbox'
+colorscheme tender
+" colorscheme spacecamp
+" colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+" set background=light
+" colorscheme github_light
+
+" if has('termguicolors')
+  " set termguicolors
+" endif
+" let g:sonokai_style = 'andromeda'
+" let g:sonokai_better_performance = 1
+" colorscheme sonokai
+
+
+" let g:lightline = {'colorscheme' : 'sonokai'}
+" let g:airline_theme='gruvbox'
+let g:airline_theme='tender'
+" let g:airline_theme='sonokai'
+" let g:airline_theme='light'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
