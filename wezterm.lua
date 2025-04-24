@@ -1,8 +1,9 @@
 local wezterm = require 'wezterm'
 return {
   color_scheme = "Gruvbox dark, pale (base16)",
+  -- color_scheme = "Github Light (Gogh)",
   font = wezterm.font 'Source Code Pro',
-  font_size = 10,
+  font_size = 14,
   scrollback_lines = 10000,
   enable_scroll_bar = true,
   window_padding = {
