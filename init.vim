@@ -14,7 +14,7 @@ Plug 'preservim/nerdcommenter'
 
 " Plug 'christoomey/vim-tmux-navigator'
 
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 " Plug 'ellisonleao/gruvbox.nvim'
 " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'jacoborus/tender.vim'
@@ -24,7 +24,9 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'projekt0n/github-nvim-theme'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'rebelot/kanagawa.nvim'
 " Plug 'itchyny/lightline.vim'
+
 Plug 'nvim-treesitter/nvim-treesitter'
 
 
@@ -72,17 +74,19 @@ augroup autoformat_settings
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType vue,typescript,typescriptreact,javascript,javascriptreact,html,css,sass,scss,less,json AutoFormatBuffer prettier
+  autocmd FileType vue,typescript,typescriptreact,javascript,javascriptreact,html,css,sass,scss,less,json,ts,tsx AutoFormatBuffer prettier
   " " autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
   " " Alternative: autocmd FileType python AutoFormatBuffer autopep8
   autocmd FileType rust AutoFormatBuffer rustfmt
 augroup END
 
-" colorscheme gruvbox
+colorscheme gruvbox
 " colorscheme tokyonight-storm
 " colorscheme tokyonight-moon
-colorscheme tender
+" colorscheme tender
+" colorscheme kanagawa
+" colorscheme sonokai
 " colorscheme spacecamp
 " colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 " set background=light
@@ -97,10 +101,15 @@ colorscheme tender
 
 
 " let g:lightline = {'colorscheme' : 'sonokai'}
-" let g:airline_theme='gruvbox'
-let g:airline_theme='tender'
+let g:airline_theme='gruvbox'
+" let g:airline_theme='tender'
 " let g:airline_theme='sonokai'
+" let g:airline_theme='violet'
+" let g:airline_theme='molokai'
+" let g:airline_theme='wombat'
 " let g:airline_theme='light'
+" let g:airline_theme='solarized'
+" let g:airline_theme='sol'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
